@@ -1,13 +1,16 @@
-package com.martirosov.tacocloud;
+package com.martirosov.tacocloud.controller;
 
 
+import com.martirosov.tacocloud.model.Ingredient;
+import com.martirosov.tacocloud.model.Taco;
+import com.martirosov.tacocloud.model.TacoOrder;
+import com.martirosov.tacocloud.repository.IngredientsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import com.martirosov.tacocloud.Ingredient.Type;
-import org.springframework.web.context.request.RequestAttributes;
+import com.martirosov.tacocloud.model.Ingredient.Type;
 
 import java.util.Arrays;
 import java.util.List;
@@ -19,6 +22,12 @@ import java.util.stream.Collectors;
 @SessionAttributes("tacoOrder")
 @RequestMapping("/design")
 public class TacoDesignController {
+
+    private final IngredientsRepository ingredientsRepository;
+
+    public TacoDesignController(IngredientsRepository ingredientsRepository) {
+        this.ingredientsRepository = ingredientsRepository;
+    }
 
     @ModelAttribute
     public void addIngredientsToModel(Model model){
@@ -33,6 +42,7 @@ public class TacoDesignController {
                 new Ingredient("SLSA", "Salsa", Type.SAUCE),
                 new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
 
+        ingredients = ingredientsRepository.findAll();
         Type[] types = Type.values();
         for (Type t: types) {
             model.addAttribute(t.toString().toLowerCase(), ingredients.stream().filter(i -> i.getType().equals(t)).collect(Collectors.toList()));
@@ -59,7 +69,6 @@ public class TacoDesignController {
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";
-
     }
 
 }

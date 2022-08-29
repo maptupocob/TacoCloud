@@ -1,5 +1,7 @@
 package com.martirosov.tacocloud;
 
+import com.martirosov.tacocloud.model.Ingredient;
+import com.martirosov.tacocloud.repository.IngredientsRepository;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
@@ -8,6 +10,13 @@ import java.util.Map;
 
 @Component
 public class IngredientByIdConverter implements Converter<String, Ingredient> {
+
+    private final IngredientsRepository ingredientsRepository;
+
+    public IngredientByIdConverter(IngredientsRepository ingredientsRepository) {
+        this.ingredientsRepository = ingredientsRepository;
+    }
+
     @Override
     public Ingredient convert(String source) {
         Map<String, Ingredient> ingredientMap = Map.of("COTO", new Ingredient("COTO", "Corn Tortilla", Ingredient.Type.WRAP),
@@ -20,6 +29,6 @@ public class IngredientByIdConverter implements Converter<String, Ingredient> {
                 "JACK", new Ingredient("JACK", "Monterrey Jack", Ingredient.Type.CHEESE),
                 "SLSA", new Ingredient("SLSA", "Salsa", Ingredient.Type.SAUCE),
                 "SRCR", new Ingredient("SRCR", "Sour Cream", Ingredient.Type.SAUCE));
-        return ingredientMap.get(source);
+        return ingredientsRepository.findById(source).orElse(null);
     }
 }

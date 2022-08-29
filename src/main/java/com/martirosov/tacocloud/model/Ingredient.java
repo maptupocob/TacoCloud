@@ -1,4 +1,4 @@
-package com.martirosov.tacocloud;
+package com.martirosov.tacocloud.model;
 
 import lombok.Data;
 

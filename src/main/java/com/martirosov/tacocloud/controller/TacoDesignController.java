@@ -32,43 +32,32 @@ public class TacoDesignController {
     }
 
     @ModelAttribute
-    public void addIngredientsToModel(Model model){
-        List<Ingredient> ingredients = Arrays.asList(new Ingredient("FLTO", "Flour Tortilla" , Type.WRAP),
-                new Ingredient("COTO", "Corn Tortilla", Type.WRAP),
-                new Ingredient("GRBF", "Ground Beef", Type.PROTEIN),
-                new Ingredient("CARN", "Carnitas", Type.PROTEIN),
-                new Ingredient("TMTO", "Diced Tomatoes", Type.VEGGIES),
-                new Ingredient("LETC", "Lettuce", Type.VEGGIES),
-                new Ingredient("CHED", "Cheddar", Type.CHEESE),
-                new Ingredient("JACK", "Monterrey Jack", Type.CHEESE),
-                new Ingredient("SLSA", "Salsa", Type.SAUCE),
-                new Ingredient("SRCR", "Sour Cream", Type.SAUCE));
-
-        ingredients = ingredientsRepository.findAll();
+    public void addIngredientsToModel(Model model) {
+        List<Ingredient> ingredients = ingredientsRepository.findAll();
         Type[] types = Type.values();
-        for (Type t: types) {
+        for (Type t : types) {
             model.addAttribute(t.toString().toLowerCase(), ingredients.stream().filter(i -> i.getType().equals(t)).collect(Collectors.toList()));
         }
     }
 
     @ModelAttribute("tacoOrder")
-    public TacoOrder tacoOrder(){
+    public TacoOrder tacoOrder() {
         return new TacoOrder();
     }
 
     @ModelAttribute("taco")
-    public Taco taco(){
+    public Taco taco() {
         return new Taco();
     }
 
     @GetMapping
-    public String design(){
+    public String design() {
         return "design";
     }
 
     @PostMapping
-    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder){
-        if(errors.hasErrors()){
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
+        if (errors.hasErrors()) {
             return "design";
         }
         tacoOrder.addTaco(taco);

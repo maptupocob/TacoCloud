@@ -21,7 +21,7 @@ public class TacoOrder implements Serializable {
     private String deliveryAddress;
     @NotBlank(message = "Name is required")
     private String deliveryName;
-    @CreditCardNumber(message = "Not a valid credit card number")
+//    @CreditCardNumber(message = "Not a valid credit card number")
     private String ccNumber;
     @Pattern(regexp="^(0[1-9]|1[0-2])([\\/])([2-9][0-9])$", message = "Must be formatted MM/YY")
     private String ccExpiration;

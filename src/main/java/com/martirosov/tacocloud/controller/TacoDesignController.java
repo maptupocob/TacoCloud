@@ -15,6 +15,7 @@ import com.martirosov.tacocloud.model.Ingredient.Type;
 
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +61,7 @@ public class TacoDesignController {
         if (errors.hasErrors()) {
             return "design";
         }
+        taco.setCreatedAt(new Date());
         tacoOrder.addTaco(taco);
         log.info("Processing taco: {}", taco);
         return "redirect:/orders/current";

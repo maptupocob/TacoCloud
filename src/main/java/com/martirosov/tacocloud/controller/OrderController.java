@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Slf4j
 @Controller
@@ -35,6 +36,7 @@ public class OrderController {
         if(errors.hasErrors()){
             return "orderForm";
         }
+        tacoOrder.setPlacedAt(new Date());
         orderRepository.save(tacoOrder);
         log.info("Order submitted: {}", tacoOrder);
         sessionStatus.setComplete();

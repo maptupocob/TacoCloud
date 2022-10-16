@@ -19,6 +19,10 @@ public class Taco {
     private String name;
     @NotNull
     @Size(min = 1, message = "You must choose at least 1 ingredient")
-    private List<Ingredient> ingredients;
+    private List<IngredientRef> ingredients;
     private Date createdAt;
+
+    public void addIngredient(Ingredient taco) {
+        this.ingredients.add(new IngredientRef(taco.getId()));
+    }
 }

@@ -2,6 +2,7 @@ package com.martirosov.tacocloud.controller;
 
 
 import com.martirosov.tacocloud.model.Ingredient;
+import com.martirosov.tacocloud.model.Ingredient.Type;
 import com.martirosov.tacocloud.model.Taco;
 import com.martirosov.tacocloud.model.TacoOrder;
 import com.martirosov.tacocloud.repository.IngredientsRepository;
@@ -11,10 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
-import com.martirosov.tacocloud.model.Ingredient.Type;
-
 import javax.validation.Valid;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
